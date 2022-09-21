@@ -2,8 +2,6 @@ import './App.css';
 import RandomNumbers from './RandomNumbers';
 import ErrorBoundary from './ErrorBoundary';
 import { useState } from 'react';
-import ErrorBoundaryFunctional from './ErrorBoundaryFunctional';
-import RandomNumbersFunctional from './RandomNumbersFunctional';
 
 const App = () => {
   const [num1, setNum1] = useState('random numbers from  1 to 20 ')
@@ -25,14 +23,6 @@ const App = () => {
           <button onClick={Generate1}>Generate Number</button>
         </ErrorBoundary>
       </p>
-      <p style={{ border: '1px solid gray', padding: '2rem', margin: '1rem' }}>
-        <h5>Do the previous task using functional component, using react-error-boundary package</h5>
-        <ErrorBoundaryFunctional>
-          <RandomNumbersFunctional number={num2} />
-          <button onClick={Generate2}>Generate Random Numbers</button>
-        </ErrorBoundaryFunctional>
-      </p>
-
     </div>
   );
 }
