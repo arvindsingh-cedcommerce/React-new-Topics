@@ -1,5 +1,7 @@
-function generateJoke(){
+export  function generateJoke(){
     return "I don't trust you."
 }
 
-export default generateJoke;
+export function generateNewMsg(){
+    return "This is new generated message!"
+}
