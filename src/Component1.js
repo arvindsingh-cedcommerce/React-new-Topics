@@ -10,8 +10,7 @@ export default function Component1() {
   const [count, setCount] = React.useState(-1)
   const [item, setItem] = React.useState();
   const [char, setChar] = React.useState('');
-  const [countSuccess, setCountSuccess] = React.useState(0);
-
+  const [countSuccess, setCountSuccess] = React.useState(1);
   const StartGame = () => {
     setItem(items[Math.floor(Math.random() * items.length)]);
     console.log(items[Math.floor(Math.random() * items.length)]);
@@ -21,126 +20,142 @@ export default function Component1() {
       arr[i].value = '';
     }
     setChar('');
-    setCountSuccess(0)
+    setCountSuccess(1)
     setCount(-1);
     setStart('yes');
   }
   const Loose = () => {
-
+    setStart("no");
   }
 
-  const Clicked = (character) => {
+  const Clicked = (character, e) => {
+    e.target.disabled = true
+
     if (item.includes(character) === false) {
       if (count <= 7) {
         setCount(count + 1);
       }
     }
     else {
-      // let temp = [...char];
-      // if (temp.includes(character) === false) {
-      //   temp.push(character);
-      // }
-      // if (countSuccess === item.length - 1) {
-      //   setWin('yes');
-      // }
       let T = 0;
-      setChar(character);
-      setCountSuccess(countSuccess + 1);
-      for (let i = 0; i < item.length ; i++){
-         
+      for (let i = 0; i < item.length; i++) {
+        if (item[i] === char) {
+          T += 1;
+        }
       }
+      setCountSuccess(countSuccess + T);
+      setChar(character);
     }
   }
-  console.log(countSuccess);
+  console.log('count=' + countSuccess);
   return (
     <>
-      {(start == 'no') ?
-        <div className='start'>
-          <div id='div1'><img src='./images/hangman-logo.png' alt='' />
+      {start == "no" ? (
+        <div className="start">
+          <div id="div1">
+            <img src="./images/hangman-logo.png" alt="" />
           </div>
-          <div id='div2'><img src='./images/start.png' alt='' onClick={StartGame} /></div>
-        </div> :
-        <div className='main'>
-          <div className='image'>
-            {count < 0 ? null :
-              <img src={images[count]} alt='' style={{ height: '400px', width: '350px' }} />}
+          <div id="div2">
+            <img src="./images/start.png" alt="" onClick={StartGame} />
           </div>
-          <div className='inputs' >
-            <div id='div1'><h3>(UP City Names)</h3></div>
-            <div id='div2'>
-              {_.times(item.length, (i) => (
-                <>
-                  {(item[i] === char) ? <>
-                    {/* {setCountSuccess(countSuccess + 1)} */}
-                    <input className='inputBox' key={i} type='text' placeholder={item[i]} maxLength='1' value={char}
-                      style={{ width: '2rem', height: '2rem', margin: '0.5rem', fontSize: '1.6rem' }} />
-                  </> :
-                    <input className='inputBox' key={i} type='text' placeholder={item[i]} maxLength='1'
-                      style={{ width: '2rem', height: '2rem', margin: '0.5rem', fontSize: '1.6rem' }} />
-                  }</>
-                // <>
-                //   {char.length > 0 ?
-                //     _.times(char.length, (i)=>(
-                //       <>
-                //        {(char[i] === item[i]) ? 
-                //        <div id={i} className='inputBoxes'>{item[i]}</div> :
-                //        <div id={i} className='inputBoxes'></div>
-                //       }
-                //       </>
-                //     )) : 
-                //     <div id={i} className='inputBoxes'></div>
-                //   }
-
-
-                // </>
-              ))}
-            </div>
-            <br />
-            <div className='buttons'>
-              <button onClick={() => Clicked('a')}>A</button>
-              <button onClick={() => Clicked('b')}>B</button>
-              <button onClick={() => Clicked('c')}>C</button>
-              <button onClick={() => Clicked('d')}>D</button>
-              <button onClick={() => Clicked('e')}>E</button>
-              <button onClick={() => Clicked('f')}>F</button>
-              <button onClick={() => Clicked('g')}>G</button>
-              <button onClick={() => Clicked('h')}>H</button>
-              <button onClick={() => Clicked('i')}>I</button>
-              <button onClick={() => Clicked('j')}>J</button>
-              <button onClick={() => Clicked('k')}>K</button>
-              <button onClick={() => Clicked('l')}>L</button>
-              <button onClick={() => Clicked('m')}>M</button>
-              <button onClick={() => Clicked('n')}>N</button>
-              <button onClick={() => Clicked('o')}>O</button>
-              <button onClick={() => Clicked('p')}>P</button>
-              <button onClick={() => Clicked('q')}>Q</button>
-              <button onClick={() => Clicked('r')}>R</button>
-              <button onClick={() => Clicked('s')}>S</button>
-              <button onClick={() => Clicked('t')}>T</button>
-              <button onClick={() => Clicked('u')}>U</button>
-              <button onClick={() => Clicked('v')}>V</button>
-              <button onClick={() => Clicked('w')}>W</button>
-              <button onClick={() => Clicked('x')}>X</button>
-              <button onClick={() => Clicked('y')}>Y</button>
-              <button onClick={() => Clicked('z')}>Z</button>
-            </div>
-            {countSuccess === item.length ?
-              <div>
-                <h3>You won the game</h3>
-                <button onClick={StartGame}>Continue to play</button>
-              </div>
-              : null}
-            {count === 8 ?
-              <div>
-                <h2>You loose the game</h2>
-                <button onClick={Loose}>Try again</button>
-              </div>
-              : null}
-          </div>
-
         </div>
-      }
+      ) : (
+        <>
+          <div className="main">
+            <div className="image">
+              {count < 0 ? null : (
+                <img
+                  src={images[count]}
+                  alt=""
+                  style={{ height: "400px", width: "350px" }}
+                />
+              )}
+            </div>
+            <div className="inputs">
+              <div id="div1">
+                <h3>(UP City Names)</h3>
+              </div>
+              <div id="div2">
+                {_.times(item.length, (i) => (
+                  <>
+                    {item[i] === char ? (
+                      <>
+                        <input
+                          className="inputBox"
+                          key={i}
+                          type="text"
+                          placeholder={item[i]}
+                          maxLength="1"
+                          value={char}
+                          style={{
+                            width: "2rem",
+                            height: "2rem",
+                            margin: "0.5rem",
+                            fontSize: "1.6rem",
+                          }}
+                        />
+                      </>
+                    ) : (
+                      <input
+                        className="inputBox"
+                        key={i}
+                        type="text"
+                        maxLength="1"
+                        style={{
+                          width: "2rem",
+                          height: "2rem",
+                          margin: "0.5rem",
+                          fontSize: "1.6rem",
+                        }}
+                      />
+                    )}
+                  </>
+                ))}
+              </div>
+              <br />
+              <div className="buttons">
+                {_.times(26, (i) => (
+                  <button
+                    onClick={(e) => {
+                      Clicked((String.fromCharCode(97 + i)), e);
+                    }}
+                    style={{
+                      fontSize: "2rem", padding: "5px 13px", borderRadius: "15px", backgroundColor: '#f3d611', border: "3px solid orangered", margin: "0.4rem",
+                    }}
+                  >
+                    {String.fromCharCode(65 + i)}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+          {countSuccess === item.length ? (
+            <div className="win-loose">
+              <h1>You won the game</h1>
+              <h1
+                onClick={Loose}
+                style={{ color: "green", cursor: "pointer", fontSize: "50px" }}
+              >
+                Continue to Play
+              </h1>
+            </div>
+          ) : null}
+          {count === 8 ? (
+            <div className="win-loose">
+              <h1>Failed</h1>
+              <h2 style={{ marginTop: "-1.5rem" }}>
+                answer was... <span style={{ fontSize: '30px' }}>{item}</span>
+              </h2>
+              <h1
+                onClick={Loose}
+                style={{ color: "red", cursor: "pointer", fontSize: "50px" }}
+              >
+                Try again
+              </h1>
+            </div>
+          ) : null}
+        </>
+      )}
     </>
-
-  )
+  );
 }

@@ -1,5 +1,5 @@
 export function hangman() {
-    var items = Array('kanpur', 'delhi', 'lucknow', 'jaipur', 'noida', 'agra', 'ghaziabad', 'ayodhya', 'gorakhpur', 'agra', 'aligarh', 'jhansi', 'prayagraj', 'varanasi');
+    var items = Array('kanpur', 'delhi', 'lucknow', 'jaipur', 'noida', 'agra', 'ghaziabad', 'ayodhya', 'gorakhpur', 'agra', 'aligarh', 'jhansi', 'prayagraj', 'varanasi','barabanki');
     return items;
 }
 
